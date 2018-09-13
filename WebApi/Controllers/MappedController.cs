@@ -42,6 +42,7 @@ namespace WebApi.Controllers
 
             var serializerSettings = new JsonSerializerSettings
             {
+                Formatting = Formatting.None,
                 ContractResolver = jsonResolver
             };
 
@@ -52,7 +53,7 @@ namespace WebApi.Controllers
                 list.Add(JsonConvert.SerializeObject(c, serializerSettings));
             }
 
-            return list;            
+            return list;
         }
 
         // GET: api/Mapped/5

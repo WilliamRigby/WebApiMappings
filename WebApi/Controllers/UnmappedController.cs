@@ -37,6 +37,7 @@ namespace WebApi.Controllers
 
             var serializerSettings = new JsonSerializerSettings
             {
+                Formatting = Formatting.None,
                 ContractResolver = jsonResolver
             };
 

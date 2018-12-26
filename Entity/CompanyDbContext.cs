@@ -1,15 +1,17 @@
-﻿using EntityModels;
+﻿using System;
+using Entity.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Entity
 {
-    public partial class DatabaseContext : DbContext
+    public partial class CompanyDbContext : DbContext
     {
-        public DatabaseContext()
+        public CompanyDbContext()
         {
         }
 
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        public CompanyDbContext(DbContextOptions<CompanyDbContext> options)
             : base(options)
         {
         }
@@ -24,8 +26,7 @@ namespace Entity
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder
-                    .UseSqlServer("Server=USLSVELH97QS32\\SQLEXPRESS;Database=ApiTest;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Company;Trusted_Connection=True;");
             }
         }
 
@@ -70,7 +71,7 @@ namespace Entity
                     .HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Order)
+                    .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ORDER_REFERENCE_CUSTOMER");

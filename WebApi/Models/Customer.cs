@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Models
+namespace WebApi.Models
 {
     public partial class Customer
     {
@@ -11,6 +11,6 @@ namespace Api.Models
         public string Country { get; set; }
         public string Phone { get; set; }
 
-        public ICollection<Order> Order { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

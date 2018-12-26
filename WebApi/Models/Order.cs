@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Api.Models
+namespace WebApi.Models
 {
     public partial class Order
     {

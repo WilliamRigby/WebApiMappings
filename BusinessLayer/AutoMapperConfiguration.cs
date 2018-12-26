@@ -23,11 +23,11 @@ namespace BusinessLayer
         {
             /* Entity -> BL Mappings */
 
-            CreateMap<EntityModels.Customer, BusinessLayer.Models.Customer>().ReverseMap();
-            CreateMap<EntityModels.Order, BusinessLayer.Models.Order>().ReverseMap();
-            CreateMap<EntityModels.OrderItem, BusinessLayer.Models.OrderItem>().ReverseMap();
-            CreateMap<EntityModels.Product, BusinessLayer.Models.Product>().ReverseMap();
-            CreateMap<EntityModels.Supplier, BusinessLayer.Models.Supplier>().ReverseMap();            
+            CreateMap<Entity.Models.Customer, BusinessLayer.Models.Customer>().ReverseMap();
+            CreateMap<Entity.Models.Order, BusinessLayer.Models.Order>().ReverseMap();
+            CreateMap<Entity.Models.OrderItem, BusinessLayer.Models.OrderItem>().ReverseMap();
+            CreateMap<Entity.Models.Product, BusinessLayer.Models.Product>().ReverseMap();
+            CreateMap<Entity.Models.Supplier, BusinessLayer.Models.Supplier>().ReverseMap();            
         }
     }
 }

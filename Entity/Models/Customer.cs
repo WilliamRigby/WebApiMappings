@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-namespace EntityModels
+namespace Entity.Models
 {
     public partial class Customer
     {
         public Customer()
         {
-            Order = new HashSet<Order>();
+            Orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -16,6 +17,6 @@ namespace EntityModels
         public string Country { get; set; }
         public string Phone { get; set; }
 
-        public ICollection<Order> Order { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

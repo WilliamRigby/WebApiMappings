@@ -27,11 +27,11 @@ namespace WebApi
         {
             /* BL -> Api Mappings */
 
-            CreateMap<BusinessLayer.Models.Customer, Api.Models.Customer>().ReverseMap();
-            CreateMap<BusinessLayer.Models.Order, Api.Models.Order>().ReverseMap();
-            CreateMap<BusinessLayer.Models.OrderItem, Api.Models.OrderItem>().ReverseMap();
-            CreateMap<BusinessLayer.Models.Product, Api.Models.Product>().ReverseMap();
-            CreateMap<BusinessLayer.Models.Supplier, Api.Models.Supplier>().ReverseMap();
+            CreateMap<BusinessLayer.Models.Customer, WebApi.Models.Customer>().ReverseMap();
+            CreateMap<BusinessLayer.Models.Order, WebApi.Models.Order>().ReverseMap();
+            CreateMap<BusinessLayer.Models.OrderItem, WebApi.Models.OrderItem>().ReverseMap();
+            CreateMap<BusinessLayer.Models.Product, WebApi.Models.Product>().ReverseMap();
+            CreateMap<BusinessLayer.Models.Supplier, WebApi.Models.Supplier>().ReverseMap();
 
         }
     }

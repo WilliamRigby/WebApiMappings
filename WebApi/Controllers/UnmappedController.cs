@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Api.Models;
+using WebApi.Models;
 using AutoMapper;
 using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
@@ -26,14 +26,14 @@ namespace WebApi.Controllers
         {            
             CustomerService service = new CustomerService();
 
-            IEnumerable<EntityModels.Customer> customers = await service.GetAllCustomersUnmapped();
+            IEnumerable<Entity.Models.Customer> customers = await service.GetAllCustomersUnmapped();
             
             var jsonResolver = new CustomContractResolver();
 
-            jsonResolver.IgnoreProperty(typeof(EntityModels.Order), "Customer");
-            jsonResolver.IgnoreProperty(typeof(EntityModels.OrderItem), "Order");
-            jsonResolver.IgnoreProperty(typeof(EntityModels.Product), "OrderItems");
-            jsonResolver.IgnoreProperty(typeof(EntityModels.Supplier), "Products");
+            jsonResolver.IgnoreProperty(typeof(Entity.Models.Order), "Customer");
+            jsonResolver.IgnoreProperty(typeof(Entity.Models.OrderItem), "Order");
+            jsonResolver.IgnoreProperty(typeof(Entity.Models.Product), "OrderItems");
+            jsonResolver.IgnoreProperty(typeof(Entity.Models.Supplier), "Products");
 
             var serializerSettings = new JsonSerializerSettings
             {

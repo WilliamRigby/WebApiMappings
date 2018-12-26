@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Models;
+using WebApi.Models;
 using AutoMapper;
 using BusinessLayer;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             IEnumerable<BusinessLayer.Models.Customer> unmapped = await service.GetAllCustomersMapped();
             
             IEnumerable<Customer> customers = _mapper.Map<IEnumerable<Customer>>(unmapped);
-
+            
             var jsonResolver = new CustomContractResolver();
 
             jsonResolver.IgnoreProperty(typeof(Order), "Customer");

@@ -1,5 +1,5 @@
 ﻿
-namespace Api.Models
+namespace WebApi.Models
 {
     public partial class OrderItem
     {

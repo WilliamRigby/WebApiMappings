@@ -16,13 +16,13 @@ namespace BusinessLayer
             _mapper = new AutoMapperConfiguration().Configure().CreateMapper();            
         }
 
-        public async Task<IEnumerable<EntityModels.Customer>> GetAllCustomersUnmapped()
+        public async Task<IEnumerable<Entity.Models.Customer>> GetAllCustomersUnmapped()
         {
-            IEnumerable<EntityModels.Customer> customers = null;
+            IEnumerable<Entity.Models.Customer> customers = null;
 
-            using(DatabaseContext context = new DatabaseContext())
-            {
-                customers = await context.Customer.Include(c => c.Order)
+            using(CompanyDbContext context = new CompanyDbContext())
+            {                
+                customers = await context.Customer.Include(c => c.Orders)
                         .ThenInclude(o => o.OrderItems)
                         .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Supplier)
@@ -34,11 +34,11 @@ namespace BusinessLayer
         
         public async Task<IEnumerable<Customer>> GetAllCustomersMapped()
         {
-            IEnumerable<EntityModels.Customer> customers = null;
+            IEnumerable<Entity.Models.Customer> customers = null;
 
-            using(DatabaseContext context = new DatabaseContext())
+            using(CompanyDbContext context = new CompanyDbContext())
             {
-                customers = await context.Customer.Include(c => c.Order)
+                customers = await context.Customer.Include(c => c.Orders)
                         .ThenInclude(o => o.OrderItems)
                         .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Supplier)

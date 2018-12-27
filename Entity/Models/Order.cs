@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Entity.Models
 {
-    public partial class Order
+    public class Order
     {
         public Order()
         {

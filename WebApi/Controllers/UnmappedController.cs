@@ -28,24 +28,24 @@ namespace WebApi.Controllers
 
             IEnumerable<Entity.Models.Customer> customers = await service.GetAllCustomersUnmapped();
             
-            var jsonResolver = new CustomContractResolver();
+            CustomContractResolver resolver = new CustomContractResolver();
 
-            jsonResolver.IgnoreProperty(typeof(Entity.Models.Order), "Customer");
-            jsonResolver.IgnoreProperty(typeof(Entity.Models.OrderItem), "Order");
-            jsonResolver.IgnoreProperty(typeof(Entity.Models.Product), "OrderItems");
-            jsonResolver.IgnoreProperty(typeof(Entity.Models.Supplier), "Products");
+            resolver.IgnoreProperty(typeof(Entity.Models.Order), "Customer");
+            resolver.IgnoreProperty(typeof(Entity.Models.OrderItem), "Order");
+            resolver.IgnoreProperty(typeof(Entity.Models.Product), "OrderItems");
+            resolver.IgnoreProperty(typeof(Entity.Models.Supplier), "Products");
 
-            var serializerSettings = new JsonSerializerSettings
+            JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.None,
-                ContractResolver = jsonResolver
+                ContractResolver = resolver
             };
 
-            var list = new List<string>();
+            List<string> list = new List<string>();
 
             foreach(var c in customers)
             {
-                list.Add(JsonConvert.SerializeObject(c, serializerSettings));
+                list.Add(JsonConvert.SerializeObject(c, settings));
             }
 
             return list;

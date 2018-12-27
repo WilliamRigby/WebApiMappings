@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Entity.Models
 {
-    public partial class Customer
+    public class Customer
     {
         public Customer()
         {

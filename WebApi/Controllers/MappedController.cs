@@ -28,29 +28,27 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             CustomerService service = new CustomerService();
-
-            IEnumerable<BusinessLayer.Models.Customer> unmapped = await service.GetAllCustomersMapped();
             
-            IEnumerable<Customer> customers = _mapper.Map<IEnumerable<Customer>>(unmapped);
+            IEnumerable<Customer> customers = _mapper.Map<IEnumerable<Customer>>(await service.GetAllCustomersMapped());
             
-            var jsonResolver = new CustomContractResolver();
+            CustomContractResolver resolver = new CustomContractResolver();
 
-            jsonResolver.IgnoreProperty(typeof(Order), "Customer");
-            jsonResolver.IgnoreProperty(typeof(OrderItem), "Order");
-            jsonResolver.IgnoreProperty(typeof(Product), "OrderItems");
-            jsonResolver.IgnoreProperty(typeof(Supplier), "Products");
+            resolver.IgnoreProperty(typeof(Order), "Customer");
+            resolver.IgnoreProperty(typeof(OrderItem), "Order");
+            resolver.IgnoreProperty(typeof(Product), "OrderItems");
+            resolver.IgnoreProperty(typeof(Supplier), "Products");
 
-            var serializerSettings = new JsonSerializerSettings
+            JsonSerializerSettings settings = new JsonSerializerSettings
             {
-                Formatting = Formatting.None,
-                ContractResolver = jsonResolver
+                Formatting = Formatting.Indented,
+                ContractResolver = resolver
             };
 
-            var list = new List<string>();
+            List<string> list = new List<string>();
 
             foreach(var c in customers)
             {
-                list.Add(JsonConvert.SerializeObject(c, serializerSettings));
+                list.Add(JsonConvert.SerializeObject(c, settings));
             }
 
             return list;

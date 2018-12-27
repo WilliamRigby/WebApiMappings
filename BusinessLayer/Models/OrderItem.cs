@@ -1,7 +1,7 @@
 ﻿
 namespace BusinessLayer.Models
 {
-    public partial class OrderItem
+    public class OrderItem
     {
         public int Id { get; set; }
         public int OrderId { get; set; }

@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace WebApi.JsonConverters
 {
@@ -19,17 +19,23 @@ namespace WebApi.JsonConverters
 
         public void IgnoreProperty(Type type, params string[] jsonPropertyNames)
         {
-            if (!_ignores.ContainsKey(type))
+            if (!_ignores.ContainsKey(type)) 
+            {
                 _ignores[type] = new HashSet<string>();
+            }                
 
             foreach (var prop in jsonPropertyNames)
+            {
                 _ignores[type].Add(prop);
+            }                
         }
 
         public void RenameProperty(Type type, string propertyName, string newJsonPropertyName)
         {
             if (!_renames.ContainsKey(type))
+            {
                 _renames[type] = new Dictionary<string, string>();
+            }                
 
             _renames[type][propertyName] = newJsonPropertyName;
         }
@@ -44,16 +50,20 @@ namespace WebApi.JsonConverters
                 property.Ignored = true;
             }
 
-            if (IsRenamed(property.DeclaringType, property.PropertyName, out var newJsonPropertyName))
+            if (IsRenamed(property.DeclaringType, property.PropertyName, out var newJsonPropertyName)) 
+            {
                 property.PropertyName = newJsonPropertyName;
+            }                
 
             return property;
         }
 
         private bool IsIgnored(Type type, string jsonPropertyName)
         {
-            if (!_ignores.ContainsKey(type))
+            if (!_ignores.ContainsKey(type)) 
+            {
                 return false;
+            }                
 
             return _ignores[type].Contains(jsonPropertyName);
         }

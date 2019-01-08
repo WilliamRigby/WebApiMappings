@@ -6,6 +6,8 @@ using BusinessLayer;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebApi.JsonConverters;
+using System.Linq;
+using System;
 
 namespace WebApi.Controllers
 {
@@ -20,60 +22,41 @@ namespace WebApi.Controllers
             _mapper = new AutoMapperConfiguration().Configure().CreateMapper();            
         }
 
-        // GET api/Unmapped
         [HttpGet(Name = "GetUnmapped")]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {            
             CustomerService service = new CustomerService();
 
             IEnumerable<Entity.Models.Customer> customers = await service.GetAllCustomersUnmapped();
-            
-            CustomContractResolver resolver = new CustomContractResolver();
-
-            resolver.IgnoreProperty(typeof(Entity.Models.Order), "Customer");
-            resolver.IgnoreProperty(typeof(Entity.Models.OrderItem), "Order");
-            resolver.IgnoreProperty(typeof(Entity.Models.Product), "OrderItems");
-            resolver.IgnoreProperty(typeof(Entity.Models.Supplier), "Products");
-
+                        
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.None,
-                ContractResolver = resolver
+                ContractResolver = new CustomContractResolver 
+                (
+                    new Dictionary<Type, string> 
+                    {
+                        { typeof(Entity.Models.Order), "Customer" },
+                        { typeof(Entity.Models.OrderItem), "Order" },
+                        { typeof(Entity.Models.Product), "OrderItems" },
+                        { typeof(Entity.Models.Supplier), "Products" }
+                    }
+                )
             };
 
-            List<string> list = new List<string>();
-
-            foreach(var c in customers)
-            {
-                list.Add(JsonConvert.SerializeObject(c, settings));
-            }
-
-            return list;
+            return customers.Select(c => JsonConvert.SerializeObject(c, settings)).ToList();
         }
 
-        // GET api/Unmapped/5
         [HttpGet("{id}", Name = "GetUnmappedById")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+        public ActionResult<string> Get(int id) { return "value"; }
 
-        // POST api/Unmapped
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/Unmapped/5
+        public void Post([FromBody] string value) { }
+        
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        public void Put(int id, [FromBody] string value) { }
 
-        // DELETE api/Unmapped/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        public void Delete(int id) { }
     }
 }

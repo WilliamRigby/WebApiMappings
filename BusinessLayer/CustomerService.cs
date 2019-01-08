@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BusinessLayer.Models;
-using Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Entity;
 
 namespace BusinessLayer
 {
@@ -26,11 +26,12 @@ namespace BusinessLayer
                         .ThenInclude(o => o.OrderItems)
                         .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Supplier)
+                        .AsNoTracking()
                         .ToListAsync();                
             }
 
             return customers;
-        }      
+        }
         
         public async Task<IEnumerable<Customer>> GetAllCustomersMapped()
         {
@@ -42,6 +43,7 @@ namespace BusinessLayer
                         .ThenInclude(o => o.OrderItems)
                         .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Supplier)
+                        .AsNoTracking()
                         .ToListAsync();                
             }
 

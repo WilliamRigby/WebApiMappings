@@ -17,22 +17,27 @@ namespace WebApi.JsonConverters
             _renames = new Dictionary<Type, Dictionary<string, string>>();
         }
 
-        public void IgnoreProperty(Type type, params string[] jsonPropertyNames)
+        public CustomContractResolver(Dictionary<Type, string> ignores) : this()
         {
-            if (!_ignores.ContainsKey(type)) 
+            foreach(KeyValuePair<Type, string> pair in ignores) 
+            {
+                IgnoreProperty(pair.Key, pair.Value);
+            }
+        }
+
+        public void IgnoreProperty(Type type, string property)
+        {
+            if(!_ignores.ContainsKey(type)) 
             {
                 _ignores[type] = new HashSet<string>();
             }                
 
-            foreach (var prop in jsonPropertyNames)
-            {
-                _ignores[type].Add(prop);
-            }                
+            _ignores[type].Add(property);            
         }
 
         public void RenameProperty(Type type, string propertyName, string newJsonPropertyName)
         {
-            if (!_renames.ContainsKey(type))
+            if(!_renames.ContainsKey(type))
             {
                 _renames[type] = new Dictionary<string, string>();
             }                
@@ -44,13 +49,13 @@ namespace WebApi.JsonConverters
         {
             var property = base.CreateProperty(member, memberSerialization);
 
-            if (IsIgnored(property.DeclaringType, property.PropertyName))
+            if(IsIgnored(property.DeclaringType, property.PropertyName))
             {
                 property.ShouldSerialize = i => false;
                 property.Ignored = true;
             }
 
-            if (IsRenamed(property.DeclaringType, property.PropertyName, out var newJsonPropertyName)) 
+            if(IsRenamed(property.DeclaringType, property.PropertyName, out var newJsonPropertyName)) 
             {
                 property.PropertyName = newJsonPropertyName;
             }                
@@ -60,7 +65,7 @@ namespace WebApi.JsonConverters
 
         private bool IsIgnored(Type type, string jsonPropertyName)
         {
-            if (!_ignores.ContainsKey(type)) 
+            if(!_ignores.ContainsKey(type)) 
             {
                 return false;
             }                
@@ -72,7 +77,7 @@ namespace WebApi.JsonConverters
         {
             Dictionary<string, string> renames;
 
-            if (!_renames.TryGetValue(type, out renames) || !renames.TryGetValue(jsonPropertyName, out newJsonPropertyName))
+            if(!_renames.TryGetValue(type, out renames) || !renames.TryGetValue(jsonPropertyName, out newJsonPropertyName))
             {
                 newJsonPropertyName = null;
                 return false;

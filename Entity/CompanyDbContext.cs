@@ -2,19 +2,15 @@
 using Entity.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 
 namespace Entity
 {
-    public partial class CompanyDbContext : DbContext
-    {
-        public CompanyDbContext()
-        {
-        }
+    public class CompanyDbContext : DbContext
+    {        
+        public CompanyDbContext() { }
 
-        public CompanyDbContext(DbContextOptions<CompanyDbContext> options)
-            : base(options)
-        {
-        }
+        public CompanyDbContext(DbContextOptions<CompanyDbContext> options) : base(options) { }
 
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -48,7 +44,7 @@ namespace Entity
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasMaxLength(40);
-
+            
                 entity.Property(e => e.Phone).HasMaxLength(20);
             });
 

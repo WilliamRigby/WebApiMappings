@@ -8,16 +8,10 @@ namespace WebApi.JsonConverters
 {
     public class CustomContractResolver : DefaultContractResolver
     {
-        private readonly Dictionary<Type, HashSet<string>> _ignores;
-        private readonly Dictionary<Type, Dictionary<string, string>> _renames;
+        private readonly Dictionary<Type, HashSet<string>> _ignores = new Dictionary<Type, HashSet<string>>();
+        private readonly Dictionary<Type, Dictionary<string, string>> _renames = new Dictionary<Type, Dictionary<string, string>>();
 
-        public CustomContractResolver()
-        {
-            _ignores = new Dictionary<Type, HashSet<string>>();
-            _renames = new Dictionary<Type, Dictionary<string, string>>();
-        }
-
-        public CustomContractResolver(Dictionary<Type, string> ignores) : this()
+        public CustomContractResolver(Dictionary<Type, string> ignores)
         {
             foreach(KeyValuePair<Type, string> pair in ignores) 
             {

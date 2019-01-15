@@ -15,12 +15,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class UnmappedController : ControllerBase
     {        
-        private readonly IMapper _mapper;
-
-        public UnmappedController()
-        {
-            _mapper = new AutoMapperConfiguration().Configure().CreateMapper();            
-        }
+        private readonly IMapper _mapper = new AutoMapperConfiguration().Configure().CreateMapper();
 
         [HttpGet(Name = "GetUnmapped")]
         public async Task<ActionResult<IEnumerable<string>>> Get()

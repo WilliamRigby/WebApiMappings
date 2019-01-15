@@ -16,12 +16,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class MappedController : ControllerBase
     {
-        private readonly IMapper _mapper;
-
-        public MappedController()
-        {
-            _mapper = new AutoMapperConfiguration().Configure().CreateMapper();            
-        }
+        private readonly IMapper _mapper = new AutoMapperConfiguration().Configure().CreateMapper();            
 
         [HttpGet(Name = "GetMapped")]
         public async Task<ActionResult<IEnumerable<string>>> Get()

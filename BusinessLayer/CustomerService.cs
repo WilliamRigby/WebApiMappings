@@ -9,12 +9,7 @@ namespace BusinessLayer
 {
     public class CustomerService
     {
-        private readonly IMapper _mapper;
-
-        public CustomerService()
-        {
-            _mapper = new AutoMapperConfiguration().Configure().CreateMapper();            
-        }
+        private readonly IMapper _mapper = new AutoMapperConfiguration().Configure().CreateMapper();
 
         public async Task<IEnumerable<Entity.Models.Customer>> GetAllCustomersUnmapped()
         {
